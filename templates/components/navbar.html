@@ -1,0 +1,14 @@
+    <nav class="da-navbar">
+        <div class="da-navbar-brand">Digital Hustle</div>
+        <ul class="da-navbar-nav">
+            <li class="da-nav-item"><a href="/" class="da-nav-link">Home</a></li>
+            <li class="da-nav-item"><a href="/aboutus" class="da-nav-link">About</a></li>
+            <li class="da-nav-item"><a href="/find-jobs" class="da-nav-link">Find Jobs</a></li>
+            <li class="da-nav-item"><a href="/find-talent" class="da-nav-link">Find Talent</a></li>
+            {% if session['key'] %}
+                <li class="da-nav-item"><a href="/logout" class="da-nav-link">Find Talent</a></li>
+            {% else %}
+                <li class="da-nav-item"><a href="/choose" class="da-nav-link">Sign Up</a></li>
+            {% endif %}
+            </ul>
+    </nav>
