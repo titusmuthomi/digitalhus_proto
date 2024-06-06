@@ -6,8 +6,9 @@
           Featured Jobs on Digital Age Hustler
         </h3>
       </div>
-      <div class="featured-jobs-container">
-        <div class="featured-filter-box">
+
+      <div class="featured-jobs-container row">
+        <div class="featured-filter-box col-md-3 col-sm-6">
           <div class="featured-filter-box-wrapper">
             <div class="featured-filter-box-title">
               <span class="text-gray1">Filter Search</span>
@@ -29,20 +30,20 @@
                     </option>
                     {% endfor %}
                   </select>
-                  <button class="btn btn-blue1-outline">Repeat Search</button>
+                  <button class="btn btn-blue1-outline">Filter</button>
                 </form>
               </div>
             </div>
           </div>
         </div>
-        <div class="featured-result-box">
+        <div class="featured-result-box col-md-8 col-sm-6">
           <div class="featured-result-box-wrapper">
             {% for job in postedjobs %}
             <a class="featured-result-item" href="#">
               <div class="company-logo-area">
                 <div class="company-logo">
                   <img
-                    src="../../static/img/company_logos/logo_01.jpg'"
+                    src="../../static/company_logos/{{job[1]}}"
                     alt=""
                     class="company-logo-img"
                   />
@@ -51,22 +52,20 @@
               <div class="job-details-area">
                 <span class="job-details-upload-time">1hr Ago</span>
                 <div class="job-details-title text-blue2">
-                  <span>{{ job['job_title'] }}</span>
+                  <span>{{ job[2] }}</span>
                 </div>
                 <!-- requires join with compoanies table for this -->
                 <div class="job-details-company-name text-blue3">
-                  <span>{{ job['company_name'] }}</span>
+                  <span>{{ job[0] }}</span>
                 </div>
                 <div class="job-details-type">
-                  <span>{{ job['jobtype_name'] }}</span>
+                  <span>{{ job[3] }}</span>
                 </div>
                 <div class="job-details-location">
-                  <span>{{ job['location_name'] }}</span>
+                  <span>{{ job[4] }}</span>
                 </div>
                 <div class="job-details-skill-list">
-                  <p>
-                    Linux, MySQL, Python, Flask, Android, HTML/CSS, Bootstrap
-                  </p>
+                  <p>{{ job[5] }}</p>
                 </div>
               </div>
             </a>

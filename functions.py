@@ -41,6 +41,15 @@ def get_salaryRange():
     connection.close()
     return range
 
+def get_featured_jobs():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+    cursor.execute("SELECT companies.company_name, companies.company_logo, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name, GROUP_CONCAT( skills.skill_name SEPARATOR',') as skills FROM postedjobs LEFT JOIN companies ON postedjobs.company_id = companies.id left JOIN locations ON locations.id = postedjobs.job_location_id LEFT JOIN jobtypes ON jobtypes.id = postedjobs.jobtype_id LEFT JOIN postedjobs_skills ON postedjobs.id = postedjobs_skills.posted_job_id LEFT JOIN skills ON skills.id = postedjobs_skills.skill_id GROUP BY companies.company_name, companies.company_logo, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name")
+    featured_jobs = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return featured_jobs
+
 def get_companies(page=1, per_page=5):
     offset = (page - 1) * per_page
     connection = mysql.connector.connect(**db_config2)

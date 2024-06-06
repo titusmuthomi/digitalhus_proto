@@ -11,7 +11,9 @@ def home():
     salaryRange = get_salaryRange()
     companies, total_records = get_companies(page=1, per_page=5)  # Initial load, first 5 companies
     total_pages = (total_records + 4) // 5  # Calculate total pages (5 items per page)
-    return render_template('home.html', locations=locations, jobtypes=jobType, salaryranges=salaryRange, companies=companies, total_pages=total_pages)
+    featured_jobs = get_featured_jobs()
+    print(featured_jobs)
+    return render_template('home.html', locations=locations, jobtypes=jobType, salaryranges=salaryRange, companies=companies, total_pages=total_pages, postedjobs = featured_jobs)
 
 
 @app.route('/find-jobs')
