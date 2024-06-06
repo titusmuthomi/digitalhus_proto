@@ -1,76 +1,81 @@
 <section>
-    <div class="featured-container">
-        <div class="featured-wrapper">
-            <div class="featured-title-box">
-                <h3 class="text-blue text-center">Featured Jobs on Digital Age Hustler</h3>
-            </div>
-            <div class="featured-jobs-container">
-                <div class="featured-filter-box">
-                    <div class="featured-filter-box-wrapper">
-                        <div class="featured-filter-box-title">
-                            <span class="text-gray1">Filter Search</span>
-                        </div>
-                        <div class="featured-filter-form-container">
-                            <div class="filter-form">
-                                <form action="">
-                                    <select name="search_category" class="search-select">
-                                        <option>Job Type</option>
-                                        {% for jobtype in jobtypes %}
-                                            <option value="{{ jobtype['id'] }}">{{ jobtype['name'] }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <select name="search_salary" class="search-select">
-                                        <option>Salary Range</option>
-                                        {% for salaryrange in salaryranges %}
-                                            <option value="{{ salaryrange['id'] }}">{{ salaryrange['name'] }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button class="btn btn-blue1-outline">Repeat Search</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="featured-result-box">
-                    <div class="featured-result-box-wrapper">
+  <div class="featured-container">
+    <div class="featured-wrapper">
+      <div class="featured-title-box">
+        <h3 class="text-blue text-center">
+          Featured Jobs on Digital Age Hustler
+        </h3>
+      </div>
 
-                        {% for job in postedjobs %}
-                        <a class="featured-result-item" href="#">
-                            <div class="company-logo-area">
-                                <div class="company-logo">
-                                    <img src="../../static/img/company_logos/logo_01.jpg'" alt="" class="company-logo-img">
-                                </div>
-                            </div>
-                            <div class="job-details-area">
-                                <span class="job-details-upload-time">1hr Ago</span>
-                                <div class="job-details-title text-blue2">
-                                    <span>{{ job['job_title'] }}</span>
-                                </div>
-                                <!-- requires join with compoanies table for this -->
-                                <div class="job-details-company-name text-blue3">
-                                    <span>{{ job['company_name'] }}</span>
-                                </div>
-                                <div class="job-details-type">
-                                    <span>{{ job['jobtype_name'] }}</span>
-                                </div>
-                                <div class="job-details-location">
-                                    <span>{{ job['location_name'] }}</span>
-                                </div>
-                                <div class="job-details-skill-list">
-                                    <p>Linux, MySQL, Python, Flask, Android, HTML/CSS, Bootstrap</p>
-                                </div>
-                            </div>
-                        </a>
+      <div class="featured-jobs-container row">
+        <div class="featured-filter-box col-md-3 col-sm-6">
+          <div class="featured-filter-box-wrapper">
+            <div class="featured-filter-box-title">
+              <span class="text-gray1">Filter Search</span>
+            </div>
+            <div class="featured-filter-form-container">
+              <div class="filter-form">
+                <form action="">
+                  <select name="search_category" class="search-select">
+                    <option>Job Type</option>
+                    {% for jobtype in jobtypes %}
+                    <option value="{{ jobtype[0] }}">{{ jobtype[0] }}</option>
                     {% endfor %}
-
-
-
-                    </div>
-                    <div class="featured-result-pagination">
-                        <p>< 1  |   2   |   3   |   4   |   5   |   ></p>
-                    </div>
-                </div>
+                  </select>
+                  <select name="search_salary" class="search-select">
+                    <option>Salary Range</option>
+                    {% for salaryrange in salaryranges %}
+                    <option value="{{ salaryrange[0] }}">
+                      {{ salaryrange[0] }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                  <button class="btn btn-blue1-outline">Filter</button>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="featured-result-box col-md-8 col-sm-6">
+          <div class="featured-result-box-wrapper">
+            {% for job in postedjobs %}
+            <a class="featured-result-item" href="#">
+              <div class="company-logo-area">
+                <div class="company-logo">
+                  <img
+                    src="../../static/company_logos/{{job[1]}}"
+                    alt=""
+                    class="company-logo-img"
+                  />
+                </div>
+              </div>
+              <div class="job-details-area">
+                <span class="job-details-upload-time">1hr Ago</span>
+                <div class="job-details-title text-blue2">
+                  <span>{{ job[2] }}</span>
+                </div>
+                <!-- requires join with compoanies table for this -->
+                <div class="job-details-company-name text-blue3">
+                  <span>{{ job[0] }}</span>
+                </div>
+                <div class="job-details-type">
+                  <span>{{ job[3] }}</span>
+                </div>
+                <div class="job-details-location">
+                  <span>{{ job[4] }}</span>
+                </div>
+                <div class="job-details-skill-list">
+                  <p>{{ job[5] }}</p>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="featured-result-pagination">
+            <p>< 1 | 2 | 3 | 4 | 5 | ></p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
