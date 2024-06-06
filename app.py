@@ -1,10 +1,18 @@
 from flask import *
+from functions import *
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+
+    locations = get_locations()
+    jobType = get_jobType()
+    salaryRange = get_salaryRange()
+    companies, total_records = get_companies(page=1, per_page=5)  # Initial load, first 5 companies
+    total_pages = (total_records + 4) // 5  # Calculate total pages (5 items per page)
+    return render_template('home.html', locations=locations, jobtypes=jobType, salaryranges=salaryRange, companies=companies, total_pages=total_pages)
+
 
 @app.route('/find-jobs')
 def findJobs():
