@@ -1,4 +1,4 @@
-import mysql.connector
+import pymysql
 # Database configuration
 db_config = {
     'user': 'root',
@@ -11,11 +11,11 @@ db_config2 = {
     'user': 'root',
     'password': '',
     'host': 'localhost',
-    'database': 'test'
+    'database': 'hustle_db'
 }
 
 def get_locations():
-    connection = mysql.connector.connect(**db_config)
+    connection = pymysql.connect(**db_config)
     cursor = connection.cursor()
     cursor.execute("SELECT location_name FROM locations")
     locations = cursor.fetchall()
@@ -24,7 +24,7 @@ def get_locations():
     return locations
 
 def get_jobType():
-    connection = mysql.connector.connect(**db_config)
+    connection = pymysql.connect(**db_config)
     cursor = connection.cursor()
     cursor.execute("SELECT jobtype_name FROM jobtypes")
     type = cursor.fetchall()
@@ -33,7 +33,7 @@ def get_jobType():
     return type
 
 def get_salaryRange():
-    connection = mysql.connector.connect(**db_config)
+    connection = pymysql.connect(**db_config)
     cursor = connection.cursor()
     cursor.execute("SELECT salary_range FROM salaryranges")
     range = cursor.fetchall()
@@ -42,7 +42,7 @@ def get_salaryRange():
     return range
 
 def get_featured_jobs():
-    connection = mysql.connector.connect(**db_config)
+    connection = pymysql.connect(**db_config)
     cursor = connection.cursor()
     cursor.execute("SELECT companies.company_name, companies.company_logo, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name, GROUP_CONCAT( skills.skill_name SEPARATOR',') as skills FROM postedjobs LEFT JOIN companies ON postedjobs.company_id = companies.id left JOIN locations ON locations.id = postedjobs.job_location_id LEFT JOIN jobtypes ON jobtypes.id = postedjobs.jobtype_id LEFT JOIN postedjobs_skills ON postedjobs.id = postedjobs_skills.posted_job_id LEFT JOIN skills ON skills.id = postedjobs_skills.skill_id GROUP BY companies.company_name, companies.company_logo, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name")
     featured_jobs = cursor.fetchall()
@@ -52,7 +52,7 @@ def get_featured_jobs():
 
 def get_companies(page=1, per_page=5):
     offset = (page - 1) * per_page
-    connection = mysql.connector.connect(**db_config2)
+    connection = pymysql.connect(**db_config2)
     cursor = connection.cursor()
     cursor.execute("SELECT COUNT(*) FROM companies")
     total_records = cursor.fetchone()[0]
