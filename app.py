@@ -1,5 +1,6 @@
 from flask import *
 from functions import *
+import math
 
 app = Flask(__name__)
 
@@ -12,8 +13,35 @@ def home():
     companies, total_records = get_companies(page=1, per_page=5)  # Initial load, first 5 companies
     total_pages = (total_records + 4) // 5  # Calculate total pages (5 items per page)
     featured_jobs = get_featured_jobs()
-    print(featured_jobs)
     return render_template('home.html', locations=locations, jobtypes=jobType, salaryranges=salaryRange, companies=companies, total_pages=total_pages, postedjobs = featured_jobs)
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    job_title = request.form.get('job_title')
+    location = request.form.get('location')
+    job_type = request.form.get('job_type')
+    salary_range = request.form.get('search_salary')
+    page = int(request.form.get('currentPage', 1))
+
+    if location == "None" or location == "Select Location":
+        location = None
+    if job_type == "None" or location == "Job Type":
+        job_type = None
+    
+    if job_title or location or job_type or salary_range:
+        page = 1
+    
+    featured_jobs = get_featured_jobs(job_title=job_title, location=location, job_type=job_type, salary_range=salary_range)
+    print(page)
+    per_page = 1
+    pages = math.ceil(len(featured_jobs) / per_page)
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_data = featured_jobs[start:end]
+    
+    return jsonify({'htmlresponse': render_template('components/response.html', postedjobs=paginated_data, page = page, per_page =per_page, total = pages  )})
+
 
 
 @app.route('/find-jobs')

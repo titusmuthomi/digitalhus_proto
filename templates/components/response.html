@@ -1,0 +1,44 @@
+<!-- <h5 style="color: #007CAD;">{{ postedjobs|length }} Job(s) Found</h5> -->
+ <!-- <h5 style="color: #007CAD;">Jobs on Digital Age Hustler</h5> -->
+<div class="featured-result-box">
+    <div class="featured-result-box-wrapper">
+        {% for job in postedjobs %}
+        <div class="job_item">
+            <a class="featured-result-item mb-3" href="#">
+                <div class="company-logo-area">
+                    <div class="company-logo">
+                        <img src="../../static/company_logos/{{job[1]}}" alt="" class="company-logo-img">
+                    </div>
+                </div>
+                <div class="job-details-area">
+                    <span class="job-details-upload-time">1hr Ago</span>
+                    <div class="job-details-title text-blue2">
+                        <span>{{ job[2] }}</span>
+                    </div>
+                    <div class="job-details-company-name text-blue3">
+                        <span>{{ job[0] }}</span>
+                    </div>
+                    <div class="job-details-type">
+                        <span>{{ job[3] }}</span>
+                    </div>
+                    <div class="job-details-location">
+                        <span>{{ job[4] }}</span>
+                    </div>
+                    <div class="job-details-skill-list">
+                        <p>{{ job[5] }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="featured-result-pagination text-center" id="paginate">
+        <input type="hidden" id="currentPage" value="{{page}}">
+        <input type="hidden" id="total" value="{{total}}">
+        <button id="prev" onclick="prev()">prev</button>
+        {% for i in range(1, (total+1)) %}
+        <button id="curr">{{i}}</button>
+        {% endfor %}
+        <button id="next" onclick="next()">Next</button>
+    </div>
+</div>

@@ -12,11 +12,12 @@
 }
 .search-field{
     border-radius: 5px;
+    font-size: 14px;
     border:none;
 }
 .search-job-title{
-    height: 38px;
-    col:20;
+    height: 40px;
+    /* col:20; */
 }
 .select-search-location{
     height:40px
