@@ -57,8 +57,15 @@ def get_featured_jobs(job_title=None, location=None, job_type=None, salary_range
 
     query = """
     SELECT companies.company_name, companies.company_logo, postedjobs.job_title,
-           jobtypes.jobtype_name, locations.location_name,
-           GROUP_CONCAT(skills.skill_name SEPARATOR ',') as skills
+      CASE 
+        WHEN TIMESTAMPDIFF(MINUTE, postedjobs.updated_at, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, postedjobs.updated_at, NOW()), ' Min Ago')
+        WHEN TIMESTAMPDIFF(HOUR, postedjobs.updated_at, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, postedjobs.updated_at, NOW()), ' Hrs Ago')
+        WHEN DATEDIFF(NOW(), postedjobs.updated_at) < 7 THEN CONCAT(DATEDIFF(NOW(), postedjobs.updated_at), ' Days Ago')
+        WHEN DATEDIFF(NOW(), postedjobs.updated_at) < 30 THEN CONCAT(FLOOR(DATEDIFF(NOW(), postedjobs.updated_at) / 7), ' Weeks Ago')
+        WHEN DATEDIFF(NOW(), postedjobs.updated_at) < 365 THEN CONCAT(FLOOR(DATEDIFF(NOW(), postedjobs.updated_at) / 30), ' Months Ago')
+        ELSE CONCAT(FLOOR(DATEDIFF(NOW(), postedjobs.updated_at) / 365), ' Years Ago')
+    END AS time_ago, jobtypes.jobtype_name, locations.location_name,
+    GROUP_CONCAT(skills.skill_name SEPARATOR ',') as skills
     FROM postedjobs
     LEFT JOIN companies ON postedjobs.company_id = companies.id
     LEFT JOIN locations ON locations.id = postedjobs.job_location_id
@@ -86,6 +93,7 @@ def get_featured_jobs(job_title=None, location=None, job_type=None, salary_range
 
     cursor.execute(query, params)
     featured_jobs = cursor.fetchall()
+
     cursor.close()
     connection.close()
     return featured_jobs
@@ -108,3 +116,31 @@ def get_jobs():
     sql = '''
     SELECT companies.company_name, companies.company_email, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name FROM ( (postedjobs INNER JOIN companies ON postedjobs.company_id = companies.id) INNER JOIN locations ON companies.id = locations.id) INNER JOIN jobtypes ON companies.id = jobtypes.id
        '''
+    
+
+from datetime import datetime, timedelta
+import pytz
+
+def time_ago(date):
+    if date is None:
+        return 'recently'
+    
+    now = datetime.now(pytz.utc)
+    diff = now - date
+
+    if diff.days >= 365:
+        years = diff.days // 365
+        return f'{years} Yr' if years > 1 else '1 Yr'
+    elif diff.days >= 30:
+        months = diff.days // 30
+        return f'{months} M' if months > 1 else '1 M'
+    elif diff.days > 0:
+        return f'{diff.days} Day' if diff.days > 1 else '1 Day'
+    elif diff.seconds >= 3600:
+        hours = diff.seconds // 3600
+        return f'{hours} Hr' if hours > 1 else '1 Hr'
+    elif diff.seconds >= 60:
+        minutes = diff.seconds // 60
+        return f'{minutes} Min' if minutes > 1 else '1 Min'
+    else:
+        return 'Now'

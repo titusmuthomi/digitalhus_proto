@@ -5,7 +5,7 @@
         if(!currentPage) {
             currentPage = 1;
         }
-        // alert(job_type)
+        // alert(currentPage)
         $.ajax({
             url: "/search",
             method: "POST",
@@ -31,16 +31,17 @@
                         true
                     );
                 };
+                
             }
         });
     }
 
     function fetch_results() {
         var job_title = $('#search_text').val();
-        var location = $('#search_location').val() ? $('#search_location').val() : $('#search_location2').val();
+        var location = $('#search_location').val()=="Select Location" ? $('#search_location2').val() : $('#search_location').val();
         var job_type = $('#search_category').val();
         var search_salary = $('#search_salary').val();
-        var currentPage = parseInt($('#currentPage').val(), 0);
+        var currentPage = 1;
         if (location === "Select Location") {
             location = null;
         }
@@ -97,3 +98,6 @@ function next() {
         load_data(currentPage);
     // }
 };
+function pages(page_no){
+    load_data(page_no)
+}

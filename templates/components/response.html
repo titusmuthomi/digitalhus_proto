@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="job-details-area">
-                    <span class="job-details-upload-time">1hr Ago</span>
+                    <span class="job-details-upload-time">{{job[3]}}</span>
                     <div class="job-details-title text-blue2">
                         <span>{{ job[2] }}</span>
                     </div>
@@ -19,13 +19,13 @@
                         <span>{{ job[0] }}</span>
                     </div>
                     <div class="job-details-type">
-                        <span>{{ job[3] }}</span>
-                    </div>
-                    <div class="job-details-location">
                         <span>{{ job[4] }}</span>
                     </div>
+                    <div class="job-details-location">
+                        <span>{{ job[5] }}</span>
+                    </div>
                     <div class="job-details-skill-list">
-                        <p>{{ job[5] }}</p>
+                        <p>{{ job[6] }}</p>
                     </div>
                 </div>
             </a>
@@ -33,12 +33,14 @@
         {% endfor %}
     </div>
     <div class="featured-result-pagination text-center" id="paginate">
+        <p>
         <input type="hidden" id="currentPage" value="{{page}}">
         <input type="hidden" id="total" value="{{total}}">
-        <button id="prev" onclick="prev()">prev</button>
+        <button id="prev" onclick="prev()"><i class="fas fa-chevron-left"></i> prev</button>
         {% for i in range(1, (total+1)) %}
-        <button id="curr">{{i}}</button>
+        <button class="{% if i == page %} active {% endif %}" id="{{i}}" onclick="pages(this.id)">{{i}}</button>
         {% endfor %}
-        <button id="next" onclick="next()">Next</button>
+        <button id="next" onclick="next()">Next <i class="fas fa-chevron-right"></i> </button>
+        </p>
     </div>
 </div>

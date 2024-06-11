@@ -91,3 +91,30 @@
 .job-details-skill-list p{
     font-size:.75rem;
 }
+.featured-result-pagination {
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .featured-result-pagination p button {
+    color: rgb(252, 249, 249);
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: none;
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: #2471FC;
+    
+  }
+  
+  .featured-result-pagination p button.active {
+    background-color: #19386B;
+    color: white;
+    border-radius: 5px;
+  }
+  .featured-result-pagination p button:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
