@@ -29,12 +29,13 @@ def search():
     if job_type == "None" or location == "Job Type":
         job_type = None
     
-    if job_title or location or job_type or salary_range:
-        page = 1
-    
     featured_jobs = get_featured_jobs(job_title=job_title, location=location, job_type=job_type, salary_range=salary_range)
     print(page)
-    per_page = 1
+    # print(job_title)
+    # print(location)
+    print(job_type)
+    # print(salary_range)
+    per_page = 2
     pages = math.ceil(len(featured_jobs) / per_page)
     start = (page - 1) * per_page
     end = start + per_page

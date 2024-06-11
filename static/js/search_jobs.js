@@ -2,6 +2,10 @@
     // alert("hi")
     const perPage = 2;
     function load_data(currentPage, job_title, location, job_type, search_salary){
+        if(!currentPage) {
+            currentPage = 1;
+        }
+        // alert(job_type)
         $.ajax({
             url: "/search",
             method: "POST",
@@ -33,9 +37,10 @@
 
     function fetch_results() {
         var job_title = $('#search_text').val();
-        var location = $('#search_location').val();
+        var location = $('#search_location').val() ? $('#search_location').val() : $('#search_location2').val();
         var job_type = $('#search_category').val();
         var search_salary = $('#search_salary').val();
+        var currentPage = parseInt($('#currentPage').val(), 0);
         if (location === "Select Location") {
             location = null;
         }
@@ -45,7 +50,8 @@
         if (search_salary  === "Salary Range") {
             search_salary = null;
         }
-        load_data(job_title, location, job_type, search_salary);
+        // alert(job_type)
+        load_data(currentPage, job_title, location, job_type, search_salary);
     }
 
     $('#search_text').keyup(function(){
@@ -53,6 +59,10 @@
     });
 
     $('#search_location').change(function(){
+        fetch_results();
+    });
+
+    $('#search_location2').change(function(){
         fetch_results();
     });
 
