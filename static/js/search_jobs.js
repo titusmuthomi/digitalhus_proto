@@ -23,6 +23,7 @@
                         "disabled",
                         true
                     );
+                    $('#prev').css({"background-color": "#ddd", "color": "black"})
                 };
 
                 if (parseInt($('#currentPage').val(), 0) == parseInt($('#total').val(), 0)) {
@@ -30,6 +31,7 @@
                         "disabled",
                         true
                     );
+                    $('#next').css({"background-color": "#ddd", "color": "black"})
                 };
                 
             }
