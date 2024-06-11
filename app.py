@@ -35,7 +35,7 @@ def search():
     # print(location)
     print(job_type)
     # print(salary_range)
-    per_page = 2
+    per_page = 1
     pages = math.ceil(len(featured_jobs) / per_page)
     start = (page - 1) * per_page
     end = start + per_page

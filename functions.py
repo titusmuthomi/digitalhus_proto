@@ -56,7 +56,7 @@ def get_featured_jobs(job_title=None, location=None, job_type=None, salary_range
     cursor = connection.cursor()
 
     query = """
-    SELECT companies.company_name, companies.company_logo, postedjobs.job_title,postedjobs.updated_at,
+    SELECT companies.company_name, companies.company_logo, postedjobs.job_title,
            jobtypes.jobtype_name, locations.location_name,
            GROUP_CONCAT(skills.skill_name SEPARATOR ',') as skills
     FROM postedjobs
@@ -87,15 +87,6 @@ def get_featured_jobs(job_title=None, location=None, job_type=None, salary_range
     cursor.execute(query, params)
     updated = []
     featured_jobs = cursor.fetchall()
-    for job in featured_jobs:
-        job = list(job)
-        if isinstance(job[3], str):
-            job[5] = datetime.strptime(job[5], '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.utc)
-        elif isinstance(job[3], datetime):
-            job[3] = job[3].replace(tzinfo=pytz.utc)
-        job[3] = time_ago(job[3])
-        #print(datetime.strptime(job[3], '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.utc))
-        updated.append(job)
     cursor.close()
     connection.close()
     return updated
@@ -118,5 +109,3 @@ def get_jobs():
     sql = '''
     SELECT companies.company_name, companies.company_email, postedjobs.job_title, jobtypes.jobtype_name, locations.location_name FROM ( (postedjobs INNER JOIN companies ON postedjobs.company_id = companies.id) INNER JOIN locations ON companies.id = locations.id) INNER JOIN jobtypes ON companies.id = jobtypes.id
        '''
-    
-#convert 1 hour ago
